@@ -1,19 +1,26 @@
 body {
-  margin: 0;
-  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  margin: 0;
 }
 
 div {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
 input {
-  border: 5px solid rgba(0, 0, 0, 0.25);
-  font-size: 25px;
   padding: 10px;
+  border: 5px solid rgba(0, 0, 0, 0.25);
   background-color: rgba(255, 255, 255, 0.75);
+  font-size: 25px;
+}
+
+@media (max-width: 640px) {
+  body {
+    grid-template-columns: 1fr;
+  }
 }

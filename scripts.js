@@ -1,37 +1,49 @@
-const color1div = document.querySelector("#color1");
-const color2div = document.querySelector("#color2");
-const color1input = document.querySelector("#color1 input");
-const color2input = document.querySelector("#color2 input");
+const defaultColor1 = "tomato";
+const defaultColor2 = "salmon";
 
-function setColors() {
-  color1div.style.background = color1input.value;
-  color2div.style.background = color2input.value;
+const div1 = document.querySelector("#div1");
+const div2 = document.querySelector("#div2");
+const input1 = document.querySelector("#div1 input");
+const input2 = document.querySelector("#div2 input");
 
-  let searchParams = new URLSearchParams(window.location.search);
+input1.addEventListener("change", eventListener);
+input2.addEventListener("change", eventListener);
 
-  searchParams.set("1", color1input.value);
-  searchParams.set("2", color2input.value);
+setInitialColors();
+
+function eventListener() {
+  setBackgroundColors(input1.value, input2.value);
+  setSearchParams(input1.value, input2.value);
+}
+
+function setBackgroundColors(color1, color2) {
+  div1.style.background = color1;
+  div2.style.background = color2;
+}
+
+function setInputValues(color1, color2) {
+  input1.value = color1;
+  input2.value = color2;
+}
+
+function setSearchParams(color1, color2) {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  searchParams.set("1", color1);
+  searchParams.set("2", color2);
 
   history.pushState(
     null,
     "",
-    window.location.pathname + "?" + searchParams.toString()
+    `${window.location.pathname}?${searchParams.toString()}`
   );
 }
 
-color1input.addEventListener("change", setColors);
-color2input.addEventListener("change", setColors);
-
 function setInitialColors() {
   const searchParams = new URLSearchParams(document.location.search);
-  const color1 = searchParams.get("1") || "tomato";
-  const color2 = searchParams.get("2") || "salmon";
+  const color1 = searchParams.get("1") || defaultColor1;
+  const color2 = searchParams.get("2") || defaultColor2;
 
-  color1input.value = color1;
-  color2input.value = color2;
-
-  color1div.style.background = color1;
-  color2div.style.background = color2;
+  setInputValues(color1, color2);
+  setBackgroundColors(color1, color2);
 }
-
-setInitialColors();
